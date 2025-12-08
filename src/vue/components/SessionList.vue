@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import SessionItem from './SessionItem.vue'
+import { stablePopularitySort, debounce } from '@/js/utils'
 import type { Session } from '@/types'
 
 const props = defineProps<{
@@ -12,8 +13,12 @@ const emit = defineEmits<{
   (event: 'toggle-complete', id: string, isComplete: boolean): void
 }>()
 
+const SORT_BY_ASC = 'asc'
+const SORT_BY_DESC = 'desc'
+const DEFAULT_SORT = SORT_BY_DESC
+
 const query = ref('')
-const sortOrder = ref<'desc' | 'asc'>('desc')
+const sortOrder = ref<typeof SORT_BY_DESC | typeof SORT_BY_ASC>(DEFAULT_SORT)
 
 // 2. filter functionality with debounce
 const filteredSessions = computed(() => {
@@ -24,24 +29,12 @@ const filteredSessions = computed(() => {
 
 // 3. stable sort by popularity
 const sortedSessions = computed(() => {
-  return filteredSessions.value
-    .map((s, i) => ({ s, i }))
-    .sort((a, b) => {
-      if (a.s.popularity === b.s.popularity) return a.i - b.i
-      return sortOrder.value === 'desc'
-        ? b.s.popularity - a.s.popularity // higher => lower
-        : a.s.popularity - b.s.popularity // lower => higher
-    })
-    .map((x) => x.s)
+  return stablePopularitySort(filteredSessions.value, sortOrder.value)
 })
 
-let debounce: ReturnType<typeof setTimeout>
-const filterSessionsHandler = (event: Event) => {
-  clearTimeout(debounce)
-  debounce = setTimeout(() => {
-    query.value = (event.target as HTMLInputElement).value
-  }, 300)
-}
+const filterSessionsHandler = debounce((event: Event) => {
+  query.value = (event.target as HTMLInputElement).value
+}, 300)
 </script>
 
 <template>
