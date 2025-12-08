@@ -18,8 +18,17 @@ const filteredSessions = computed(() => {
   )
 })
 
+// 3. stable sort by popularity
 const sortedSessions = computed(() => {
   return filteredSessions.value
+    .map((s, i) => ({ s, i }))
+    .sort((a, b) => {
+      if (a.s.popularity === b.s.popularity) return a.i - b.i
+      return sortOrder.value === 'desc'
+        ? b.s.popularity - a.s.popularity // higher => lower
+        : a.s.popularity - b.s.popularity // lower => higher
+    })
+    .map((x) => x.s)
 })
 
 let debounce: ReturnType<typeof setTimeout>
@@ -49,17 +58,16 @@ const filterSessionsHandler = (event: Event) => {
           />
         </label>
       </p>
-      <p>{{ query }}</p>
 
       <p class="inline-flex items-center">
         <span class="mr-2">Sort by popularity:</span>
 
-        <label>
+        <label class="inline-flex gap-1 cursor-pointer select-none">
           <span aria-label="Descending order">↓</span>
           <input id="sortByDesc" type="radio" value="desc" name="sortOrder" v-model="sortOrder" />
         </label>
 
-        <label>
+        <label class="inline-flex gap-1 cursor-pointer select-none">
           <span aria-label="Ascending order">↑</span>
           <input id="sortByAsc" type="radio" value="asc" name="sortOrder" v-model="sortOrder" />
         </label>
