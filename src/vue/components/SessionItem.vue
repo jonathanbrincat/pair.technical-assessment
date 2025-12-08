@@ -8,6 +8,11 @@ defineProps<{
 const emit = defineEmits<{
   (event: 'toggle-complete', id: string, isComplete: boolean): void
 }>()
+
+const hasBadgeClass = (difficulty: string | null) =>
+  difficulty
+    ? ['rounded-xl', 'bg-black', 'text-white', 'inline-flex', 'items-center', 'px-3', 'py-1']
+    : null
 </script>
 
 <template>
@@ -27,11 +32,18 @@ const emit = defineEmits<{
       </p>
     </header>
 
-    <div class="px-2 my-2">
-      <p><span class="text-xs font-semibold uppercase mr-2">Tags:</span>{{ item.tags }}</p>
-      <p><span class="text-xs font-semibold uppercase mr-2">Minutes:</span>{{ item.mins }}</p>
-      <p>
-        <span class="text-xs font-semibold uppercase mr-2">Difficulty:</span>{{ item.difficulty }}
+    <div class="grid grid-cols-2 px-2 my-2">
+      <p class="col-span-2">
+        <span class="text-xs font-semibold uppercase mr-2">Tags:</span>
+        {{ item.tags.length ? item.tags?.join(', ') : '-' }}
+      </p>
+      <p class="text-xs">
+        <span class="font-semibold uppercase mr-2">Difficulty:</span>
+        <span :class="hasBadgeClass(item.difficulty)">{{ item.difficulty ?? 'N/A' }}</span>
+      </p>
+      <p class="justify-self-end">
+        <span class="text-xs font-semibold uppercase mr-2">Duration:</span>
+        {{ item.mins }} minute(s)
       </p>
     </div>
 
