@@ -41,45 +41,49 @@ const filterSessionsHandler = debounce((event: Event) => {
   <p v-if="isLoading" aria-live="polite" role="status">Loading sessions&hellip;</p>
 
   <template v-else>
-    <div class="flex justify-between gap-4 mb-4">
-      <p class="basis-2/5">
-        <label>
-          <span class="sr-only">Filter sessions by title</span>
-          <input
-            id="filter"
-            class="border-3 rounded-sm w-full p-1"
-            type="text"
-            placeholder="Filter sessions..."
-            aria-controls="session-list"
-            @input="filterSessionsHandler"
+    <p v-if="!data.length" aria-live="polite">No sessions found</p>
+
+    <template v-else>
+      <div class="flex justify-between gap-4 mb-4">
+        <p class="basis-2/5">
+          <label>
+            <span class="sr-only">Filter sessions by title</span>
+            <input
+              id="filter"
+              class="border-3 rounded-sm w-full p-1"
+              type="text"
+              placeholder="Filter sessions..."
+              aria-controls="session-list"
+              @input="filterSessionsHandler"
+            />
+          </label>
+        </p>
+
+        <p class="inline-flex items-center">
+          <span class="mr-2">Sort by popularity:</span>
+
+          <label class="inline-flex gap-1 cursor-pointer select-none">
+            <span aria-label="Descending order">↓</span>
+            <input id="sortByDesc" type="radio" value="desc" name="sortOrder" v-model="sortOrder" />
+          </label>
+
+          <label class="inline-flex gap-1 cursor-pointer select-none">
+            <span aria-label="Ascending order">↑</span>
+            <input id="sortByAsc" type="radio" value="asc" name="sortOrder" v-model="sortOrder" />
+          </label>
+        </p>
+      </div>
+
+      <ul id="session-list" class="flex flex-col gap-4" aria-live="polite" role="list">
+        <li v-for="item in sortedSessions" :key="item.id" role="listitem">
+          <SessionItem
+            :item
+            @toggle-complete="(id, isComplete) => emit('toggle-complete', id, isComplete)"
           />
-        </label>
-      </p>
+        </li>
 
-      <p class="inline-flex items-center">
-        <span class="mr-2">Sort by popularity:</span>
-
-        <label class="inline-flex gap-1 cursor-pointer select-none">
-          <span aria-label="Descending order">↓</span>
-          <input id="sortByDesc" type="radio" value="desc" name="sortOrder" v-model="sortOrder" />
-        </label>
-
-        <label class="inline-flex gap-1 cursor-pointer select-none">
-          <span aria-label="Ascending order">↑</span>
-          <input id="sortByAsc" type="radio" value="asc" name="sortOrder" v-model="sortOrder" />
-        </label>
-      </p>
-    </div>
-
-    <ul id="session-list" class="flex flex-col gap-4" aria-live="polite" role="list">
-      <li v-for="item in sortedSessions" :key="item.id" role="listitem">
-        <SessionItem
-          :item
-          @toggle-complete="(id, isComplete) => emit('toggle-complete', id, isComplete)"
-        />
-      </li>
-
-      <li role="listitem" v-show="!sortedSessions.length">No matching results found</li>
-    </ul>
+        <li role="listitem" v-show="!sortedSessions.length">No matching results found</li>
+      </ul>
+    </template>
   </template>
 </template>

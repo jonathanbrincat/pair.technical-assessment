@@ -9,11 +9,16 @@ export const useSessionStore = defineStore('session', () => {
   const isLoading = ref(true)
   const isError = ref(false)
 
-  async function fetchSessions() {
+  async function fetchSessions(isSimulateError = false) {
     isLoading.value = true
     isError.value = false
 
     try {
+      // 5. for simulated error
+      if (isSimulateError) {
+        throw new Error('Simulated network error: Failed to fetch data')
+      }
+
       const response = await fetch(ENDPOINT)
       if (!response.ok) throw new Error('Failed to fetch data')
 
