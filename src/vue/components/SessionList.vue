@@ -11,15 +11,24 @@ const props = defineProps<{
 const query = ref('')
 const sortOrder = ref<'desc' | 'asc'>('desc')
 
+// 2. filter functionality with debounce
 const filteredSessions = computed(() => {
-  return props.data
+  return props.data.filter((item) =>
+    item.title.toLowerCase().includes(query.value.trim().toLowerCase()),
+  )
 })
 
 const sortedSessions = computed(() => {
   return filteredSessions.value
 })
 
-const filterSessionsHandler = () => {}
+let debounce: ReturnType<typeof setTimeout>
+const filterSessionsHandler = (event: Event) => {
+  clearTimeout(debounce)
+  debounce = setTimeout(() => {
+    query.value = (event.target as HTMLInputElement).value
+  }, 300)
+}
 </script>
 
 <template>
@@ -36,11 +45,11 @@ const filterSessionsHandler = () => {}
             type="text"
             placeholder="Filter sessions..."
             aria-controls="session-list"
-            :value="query"
             @input="filterSessionsHandler"
           />
         </label>
       </p>
+      <p>{{ query }}</p>
 
       <p class="inline-flex items-center">
         <span class="mr-2">Sort by popularity:</span>
