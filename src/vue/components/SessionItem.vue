@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { Session } from '@/types'
+
 defineProps<{
-  item: Record<string, undefined | string | number | string[]>
+  item: Session
 }>()
 </script>
 

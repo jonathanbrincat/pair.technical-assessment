@@ -1,10 +1,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { Session } from '@/types'
 
 const ENDPOINT = '/sessions.json'
 
 export const useSessionStore = defineStore('session', () => {
-  const sessionCollection = ref([])
+  const sessionCollection = ref<Session[]>([] as Session[])
   const isLoading = ref(true)
   const isError = ref(false)
 
