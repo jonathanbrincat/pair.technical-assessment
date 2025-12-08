@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Session } from '@/types'
 
-const ENDPOINT = '/sessions.json'
+const ENDPOINT = `${import.meta.env.BASE_URL}sessions.json`
 
 export const useSessionStore = defineStore('sessions', () => {
   const sessionCollection = ref<Session[]>([] as Session[])

@@ -13,5 +13,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: 'https://jonathanbrincat.github.io/pair.technical-assessment/',
+  base: process.env.NODE_ENV === 'development' ? '' : '/pair.technical-assessment/',
 })
