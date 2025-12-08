@@ -63,7 +63,8 @@ const hasBadgeClass = (difficulty: string | null) =>
       ]"
     >
       <p>
-        <span class="text-xs font-semibold uppercase mr-2">Popularity:</span>{{ item.popularity }}
+        <span class="text-xs font-semibold uppercase mr-2">Popularity:</span>
+        {{ item.popularity }}
       </p>
     </footer>
   </article>

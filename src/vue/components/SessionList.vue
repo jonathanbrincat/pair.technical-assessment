@@ -77,6 +77,7 @@ const filterSessionsHandler = debounce((event: Event) => {
               value="desc"
               name="sortOrder"
               v-model="sortOrder"
+              aria-controls="session-list"
             />
           </label>
 
@@ -95,12 +96,19 @@ const filterSessionsHandler = debounce((event: Event) => {
               value="asc"
               name="sortOrder"
               v-model="sortOrder"
+              aria-controls="session-list"
             />
           </label>
         </p>
       </div>
 
-      <ul id="session-list" class="flex flex-col gap-4" aria-live="polite" role="list">
+      <ul
+        id="session-list"
+        class="flex flex-col gap-4"
+        :aria-busy="isLoading"
+        aria-live="polite"
+        role="list"
+      >
         <li v-for="item in sortedSessions" :key="item.id" role="listitem">
           <SessionItem
             :item

@@ -4,7 +4,7 @@ import type { Session } from '@/types'
 
 const ENDPOINT = '/sessions.json'
 
-export const useSessionStore = defineStore('session', () => {
+export const useSessionStore = defineStore('sessions', () => {
   const sessionCollection = ref<Session[]>([] as Session[])
   const isLoading = ref(true)
   const isError = ref(false)
@@ -22,8 +22,7 @@ export const useSessionStore = defineStore('session', () => {
       const response = await fetch(ENDPOINT)
       if (!response.ok) throw new Error('Failed to fetch data')
 
-      const data = await response.json()
-      // 1. cast mins to number
+      const data = await response.json() // { sessions: [] }
       sessionCollection.value = data.sessions.map((item: Session) => ({
         ...item,
         mins: Number(item.mins), // 1. coercion to number type
