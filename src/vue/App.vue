@@ -6,6 +6,9 @@ import SessionList from './components/SessionList.vue'
 const store = useSessionStore()
 
 onMounted(async () => {
+  // 4. simulate network delay
+  await new Promise((resolve) => setTimeout(resolve, 500))
+
   await store.fetchSessions()
 
   console.log('jb :: ', store.sessionCollection)
@@ -18,6 +21,6 @@ onMounted(async () => {
   </header>
 
   <main class="max-w-3xl mx-auto px-8">
-    <SessionList />
+    <SessionList :isLoading="store.isLoading" />
   </main>
 </template>
