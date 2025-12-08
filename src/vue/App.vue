@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useSessionStore } from './stores/sessionStore'
 import SessionList from './components/SessionList.vue'
+
+const store = useSessionStore()
+
+onMounted(async () => {
+  await store.fetchSessions()
+
+  console.log('jb :: ', store.sessionCollection)
+})
 </script>
 
 <template>

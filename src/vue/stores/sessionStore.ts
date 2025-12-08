@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('session', () => {
+const ENDPOINT = '/sessions.json'
+
+export const useSessionStore = defineStore('session', () => {
   const sessionCollection = ref([])
   const isLoading = ref(true)
   const isError = ref(false)
@@ -11,13 +13,20 @@ export const useCounterStore = defineStore('session', () => {
     isError.value = false
 
     try {
-      sessionCollection.value = []
+      const response = await fetch(ENDPOINT)
+      if (!response.ok) throw new Error('Failed to fetch data')
+
+      const data = await response.json()
+      sessionCollection.value = data.sessions
     } catch (error: unknown) {
       console.error('Error retrieving data from API: ', error)
+      isError.value = true
+
+      throw error
     } finally {
       isLoading.value = false
     }
   }
 
-  return { sessionCollection, isLoading, isError }
+  return { sessionCollection, isLoading, isError, fetchSessions }
 })
