@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SessionList from './components/SessionList.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <header class="bg-black text-white px-8 py-2 mb-8">
+    <h1 class="text-3xl">Learning Sessions Browser</h1>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-8">
+    <SessionList />
+  </main>
 </template>
