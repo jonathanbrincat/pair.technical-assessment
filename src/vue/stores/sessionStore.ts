@@ -18,7 +18,11 @@ export const useSessionStore = defineStore('session', () => {
       if (!response.ok) throw new Error('Failed to fetch data')
 
       const data = await response.json()
-      sessionCollection.value = data.sessions
+      // 1. cast mins to number
+      sessionCollection.value = data.sessions.map((item: Session) => ({
+        ...item,
+        mins: Number(item.mins), // 1. coercion to number type
+      }))
     } catch (error: unknown) {
       console.error('Error retrieving data from API: ', error)
       isError.value = true
