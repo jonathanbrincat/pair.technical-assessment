@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { onMounted, useTemplateRef, nextTick } from 'vue'
+import { onMounted, useTemplateRef, nextTick, ref } from 'vue'
 import { useSessionStore } from './stores/sessionStore'
 import SessionList from './components/SessionList.vue'
 
 const store = useSessionStore()
 
 const retryButton = useTemplateRef('retry-button')
+
+const errorMessage = ref<string | null | unknown>('')
 
 onMounted(async () => {
   // 4. simulate network delay
@@ -15,9 +17,13 @@ onMounted(async () => {
 })
 
 async function loadSessions(simulateError = false) {
+  errorMessage.value = null
+
   try {
     await store.fetchSessions(simulateError)
   } catch (error: unknown) {
+    errorMessage.value = error
+
     await nextTick()
     retryButton.value?.focus()
   }
@@ -52,6 +58,7 @@ function testReactivityHandler() {
       v-if="store.isError"
     >
       <p class="mb-4">Something went wrong while loading sessions.</p>
+      <p class="text-xs italic mb-4" v-if="errorMessage">{{ errorMessage }}</p>
       <button
         class="bg-red-600 hover:bg-red-700 text-white rounded float-right focus:outline-2 focus:outline-offset-1 focus:outline-red-600 active:bg-red-300 px-3 py-1 cursor-pointer"
         ref="retry-button"
