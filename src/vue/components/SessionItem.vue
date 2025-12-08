@@ -16,14 +16,23 @@ const hasBadgeClass = (difficulty: string | null) =>
 </script>
 
 <template>
-  <article class="border-3 rounded-sm" :aria-label="item.title">
-    <header class="bg-black text-white flex justify-between items-center px-2 p-1">
-      <h2 class="text-lg">{{ item.title }}</h2>
+  <article
+    :class="['border-3 rounded-sm', { 'border-green-700': item.completed }]"
+    :aria-label="item.title"
+  >
+    <header
+      :class="[
+        'text-white flex justify-between items-center px-2 pb-1',
+        item.completed ? 'bg-green-700' : 'bg-black',
+      ]"
+    >
+      <h2 :class="['text-lg', { 'line-through': item.completed }]">{{ item.title }}</h2>
 
       <p class="text-sm">
         <label class="flex item-center gap-2 cursor-pointer select-none">
           <span aria-live="polite">{{ item.completed ? 'Mark Incomplete' : 'Mark Complete' }}</span>
           <input
+            class="accent-amber-500 cursor-pointer focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
             type="checkbox"
             :checked="item.completed"
             @change="emit('toggle-complete', item.id, !item.completed)"
@@ -47,7 +56,12 @@ const hasBadgeClass = (difficulty: string | null) =>
       </p>
     </div>
 
-    <footer class="rounded-tl-md bg-black text-white justify-self-end px-2 mt-2">
+    <footer
+      :class="[
+        'rounded-tl-md text-white col-span-2 justify-self-end px-2 mt-2',
+        item.completed ? 'bg-green-700' : 'bg-black',
+      ]"
+    >
       <p>
         <span class="text-xs font-semibold uppercase mr-2">Popularity:</span>{{ item.popularity }}
       </p>

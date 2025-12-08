@@ -50,7 +50,7 @@ const filterSessionsHandler = debounce((event: Event) => {
             <span class="sr-only">Filter sessions by title</span>
             <input
               id="filter"
-              class="border-3 rounded-sm w-full p-1"
+              class="border-3 focus:outline-3 focus:outline-offset-1 focus:outline-amber-500 rounded-sm w-full p-1"
               type="text"
               placeholder="Filter sessions..."
               aria-controls="session-list"
@@ -62,14 +62,40 @@ const filterSessionsHandler = debounce((event: Event) => {
         <p class="inline-flex items-center">
           <span class="mr-2">Sort by popularity:</span>
 
-          <label class="inline-flex gap-1 cursor-pointer select-none">
+          <label
+            :class="[
+              'border-black hover:bg-amber-500 hover:text-black border-3 border-r-0 rounded-l-sm px-3 py-1 inline-flex gap-1 cursor-pointer select-none',
+              { 'bg-black text-white': sortOrder === SORT_BY_DESC },
+            ]"
+            title="Descending order"
+          >
             <span aria-label="Descending order">↓</span>
-            <input id="sortByDesc" type="radio" value="desc" name="sortOrder" v-model="sortOrder" />
+            <input
+              id="sortByDesc"
+              class="accent-amber-500 focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
+              type="radio"
+              value="desc"
+              name="sortOrder"
+              v-model="sortOrder"
+            />
           </label>
 
-          <label class="inline-flex gap-1 cursor-pointer select-none">
+          <label
+            :class="[
+              'border-black hover:bg-amber-500 hover:text-black border-3 border-l-0 rounded-r-sm px-3 py-1 inline-flex gap-1 cursor-pointer select-none',
+              { 'bg-black text-white': sortOrder === SORT_BY_ASC },
+            ]"
+            title="Ascending order"
+          >
             <span aria-label="Ascending order">↑</span>
-            <input id="sortByAsc" type="radio" value="asc" name="sortOrder" v-model="sortOrder" />
+            <input
+              id="sortByAsc"
+              class="accent-amber-500 focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
+              type="radio"
+              value="asc"
+              name="sortOrder"
+              v-model="sortOrder"
+            />
           </label>
         </p>
       </div>
