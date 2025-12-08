@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import SessionItem from './SessionItem.vue'
-import { useSessionStore } from '../stores/sessionStore'
+import type { Session } from '@/types'
 
-defineProps<{
+const props = defineProps<{
+  data: Session[]
   isLoading: boolean
 }>()
-
-const store = useSessionStore()
 
 const query = ref('')
 const sortOrder = ref<'desc' | 'asc'>('desc')
 
 const filteredSessions = computed(() => {
-  return store.sessionCollection
+  return props.data
 })
 
 const sortedSessions = computed(() => {

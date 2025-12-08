@@ -21,6 +21,6 @@ onMounted(async () => {
   </header>
 
   <main class="max-w-3xl mx-auto px-8">
-    <SessionList :isLoading="store.isLoading" />
+    <SessionList :data="store.sessionCollection" :isLoading="store.isLoading" />
   </main>
 </template>
