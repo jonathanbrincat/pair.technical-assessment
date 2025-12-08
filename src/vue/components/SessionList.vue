@@ -8,6 +8,10 @@ const props = defineProps<{
   isLoading: boolean
 }>()
 
+const emit = defineEmits<{
+  (event: 'toggle-complete', id: string, isComplete: boolean): void
+}>()
+
 const query = ref('')
 const sortOrder = ref<'desc' | 'asc'>('desc')
 
@@ -75,9 +79,14 @@ const filterSessionsHandler = (event: Event) => {
     </div>
 
     <ul id="session-list" class="flex flex-col gap-4" aria-live="polite" role="list">
-      <li v-for="(item, index) in sortedSessions" :key="index" role="listitem">
-        <SessionItem :item />
+      <li v-for="item in sortedSessions" :key="item.id" role="listitem">
+        <SessionItem
+          :item
+          @toggle-complete="(id, isComplete) => emit('toggle-complete', id, isComplete)"
+        />
       </li>
+
+      <li role="listitem" v-show="!sortedSessions.length">No matching results found</li>
     </ul>
   </template>
 </template>

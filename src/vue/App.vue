@@ -10,8 +10,6 @@ onMounted(async () => {
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   await store.fetchSessions()
-
-  console.log('jb :: ', store.sessionCollection)
 })
 </script>
 
@@ -21,6 +19,10 @@ onMounted(async () => {
   </header>
 
   <main class="max-w-3xl mx-auto px-8">
-    <SessionList :data="store.sessionCollection" :isLoading="store.isLoading" />
+    <SessionList
+      :data="store.sessionCollection"
+      :isLoading="store.isLoading"
+      @toggle-complete="(id, isComplete) => store.updateStatus(id, isComplete)"
+    />
   </main>
 </template>

@@ -4,13 +4,27 @@ import type { Session } from '@/types'
 defineProps<{
   item: Session
 }>()
+
+const emit = defineEmits<{
+  (event: 'toggle-complete', id: string, isComplete: boolean): void
+}>()
 </script>
 
 <template>
   <article class="border-3 rounded-sm" :aria-label="item.title">
     <header class="bg-black text-white flex justify-between items-center px-2 p-1">
       <h2 class="text-lg">{{ item.title }}</h2>
-      <p><span class="text-xs font-semibold uppercase mr-2">Status:</span>{{ item.completed }}</p>
+
+      <p class="text-sm">
+        <label class="flex item-center gap-2 cursor-pointer select-none">
+          <span aria-live="polite">{{ item.completed ? 'Mark Incomplete' : 'Mark Complete' }}</span>
+          <input
+            type="checkbox"
+            :checked="item.completed"
+            @change="emit('toggle-complete', item.id, !item.completed)"
+          />
+        </label>
+      </p>
     </header>
 
     <div class="px-2 my-2">

@@ -33,5 +33,12 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
-  return { sessionCollection, isLoading, isError, fetchSessions }
+  function updateStatus(id: string, isComplete?: boolean) {
+    const session = sessionCollection.value.find((item) => item.id === id)
+    if (session) {
+      session.completed = isComplete ?? !session.completed
+    }
+  }
+
+  return { sessionCollection, isLoading, isError, fetchSessions, updateStatus }
 })
