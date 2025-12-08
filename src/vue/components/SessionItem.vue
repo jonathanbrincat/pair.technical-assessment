@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <article class="border-3 rounded-sm p-3" :aria-label="item.title">
+  <article class="border-3 rounded-sm p-3">
     <h2 class="text-lg">{{ item.title }}</h2>
     <p><span class="text-xs font-semibold uppercase mr-2">Tags:</span>{{ item.tags }}</p>
     <p><span class="text-xs font-semibold uppercase mr-2">Minutes:</span>{{ item.mins }}</p>
