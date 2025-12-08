@@ -8,9 +8,9 @@ const store = useSessionStore()
 <template>
   <pre class="text-xs">{{ JSON.stringify(store.sessionCollection, null, 2) }}</pre>
 
-  <ul>
-    <li>
-      <SessionItem />
+  <ul id="session-list" class="flex flex-col gap-4" aria-live="polite" role="list">
+    <li v-for="(item, index) in store.sessionCollection" :key="index" role="listitem">
+      <SessionItem :item />
     </li>
   </ul>
 </template>

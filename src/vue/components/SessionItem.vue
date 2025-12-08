@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps<{
+  item: Record<string, string | number>
+}>()
+</script>
 
 <template>
-  <article>Session Item</article>
+  <article>{{ item }}</article>
 </template>
