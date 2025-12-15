@@ -72,6 +72,7 @@ function testReactivityHandler() {
       :data="store.sessionCollection"
       :isLoading="store.isLoading"
       @toggle-complete="(id, isComplete) => store.updateStatus(id, isComplete)"
+      @toggle-favourite="(id, isFavourite) => store.updateFavourite(id, isFavourite)"
       v-if="!store.isError"
     />
   </main>

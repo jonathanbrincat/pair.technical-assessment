@@ -10,7 +10,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'toggle-complete', id: string, isComplete: boolean): void
+  (event: 'toggle-complete', id: string, isComplete: boolean): void,
+  (event: 'toggle-favourite', id: string, isFavourite: boolean): void
 }>()
 
 const SORT_BY_ASC = 'asc'
@@ -30,6 +31,14 @@ const filteredSessions = computed(() => {
 // 3. stable sort by popularity
 const sortedSessions = computed(() => {
   return stablePopularitySort(filteredSessions.value, sortOrder.value)
+})
+
+const sessionsList = computed(() => {
+  return sortedSessions.value.filter((item) =>!item.favourite)
+})
+
+const favouriteList = computed(() => {
+  return sortedSessions.value.filter((item) => item.favourite)
 })
 
 const filterSessionsHandler = debounce((event: Event) => {
@@ -102,6 +111,23 @@ const filterSessionsHandler = debounce((event: Event) => {
         </p>
       </div>
 
+      <h3 class="text-lg" v-show="favouriteList.length">Favourited Sessions</h3>
+      <ul
+        class="flex flex-col gap-4 my-4"
+        :aria-busy="isLoading"
+        aria-live="polite"
+        role="list"
+      >
+        <li v-for="item in favouriteList" :key="item.id" role="listitem">
+          <SessionItem
+            :item
+            @toggle-complete="(id, isComplete) => emit('toggle-complete', id, isComplete)"
+            @toggle-favourite="(id, isFavourite) => emit('toggle-favourite', id, isFavourite)"
+          />
+        </li>
+      </ul>
+
+      <h3 class="text-lg my-4" v-show="favouriteList.length">Other Sessions</h3>
       <ul
         id="session-list"
         class="flex flex-col gap-4"
@@ -109,10 +135,11 @@ const filterSessionsHandler = debounce((event: Event) => {
         aria-live="polite"
         role="list"
       >
-        <li v-for="item in sortedSessions" :key="item.id" role="listitem">
+        <li v-for="item in sessionsList" :key="item.id" role="listitem">
           <SessionItem
             :item
             @toggle-complete="(id, isComplete) => emit('toggle-complete', id, isComplete)"
+            @toggle-favourite="(id, isFavourite) => emit('toggle-favourite', id, isFavourite)"
           />
         </li>
 

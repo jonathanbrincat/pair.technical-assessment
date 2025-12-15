@@ -44,5 +44,12 @@ export const useSessionStore = defineStore('sessions', () => {
     }
   }
 
-  return { sessionCollection, isLoading, isError, fetchSessions, updateStatus }
+  function updateFavourite(id: string, isFavourite?: boolean) {
+    const session = sessionCollection.value.find((item) => item.id === id)
+    if (session) {
+      session.favourite = isFavourite ?? !session.favourite
+    }
+  }
+
+  return { sessionCollection, isLoading, isError, fetchSessions, updateStatus, updateFavourite }
 })

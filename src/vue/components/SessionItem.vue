@@ -6,7 +6,8 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'toggle-complete', id: string, isComplete: boolean): void
+  (event: 'toggle-complete', id: string, isComplete: boolean): void,
+  (event: 'toggle-favourite', id: string, isFavourite: boolean): void
 }>()
 
 const hasBadgeClass = (difficulty: string | null) =>
@@ -28,17 +29,31 @@ const hasBadgeClass = (difficulty: string | null) =>
     >
       <h2 :class="['text-lg', { 'line-through': item.completed }]">{{ item.title }}</h2>
 
-      <p class="text-sm">
-        <label class="flex item-center gap-2 cursor-pointer select-none">
-          <span aria-live="polite">{{ item.completed ? 'Mark Incomplete' : 'Mark Complete' }}</span>
-          <input
-            class="accent-amber-500 cursor-pointer focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
-            type="checkbox"
-            :checked="item.completed"
-            @change="emit('toggle-complete', item.id, !item.completed)"
-          />
-        </label>
-      </p>
+      <div class="inline-flex gap-4">
+        <p class="text-sm">
+          <label class="flex item-center gap-2 cursor-pointer select-none">
+            <span aria-live="polite">{{ item.completed ? 'Mark Incomplete' : 'Mark Complete' }}</span>
+            <input
+              class="accent-amber-500 cursor-pointer focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
+              type="checkbox"
+              :checked="item.completed"
+              @change="emit('toggle-complete', item.id, !item.completed)"
+            />
+          </label>
+        </p>
+
+        <p class="text-sm">
+          <label class="flex item-center gap-2 cursor-pointer select-none">
+            <span aria-live="polite">Mark favourite</span>
+            <input
+              class="accent-amber-500 cursor-pointer focus:outline-3 focus:outline-offset-1 focus:outline-amber-500"
+              type="checkbox"
+              :checked="item.favourite"
+              @change="emit('toggle-favourite', item.id, !item.favourite)"
+            />
+          </label>
+        </p>
+      </div>
     </header>
 
     <div class="grid grid-cols-2 px-2 my-2">

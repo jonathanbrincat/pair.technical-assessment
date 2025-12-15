@@ -8,7 +8,8 @@
       "difficulty": "beginner",
       "popularity": 187,
       "updatedAt": "2025-09-01T10:00:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": true
     },
     {
       "id": "s2",
@@ -18,7 +19,8 @@
       "difficulty": "advanced",
       "popularity": 122,
       "updatedAt": "2025-10-12T09:00:00Z",
-      "completed": true
+      "completed": true,
+      "favourite": false
     },
     {
       "id": "s3",
@@ -28,7 +30,8 @@
       "difficulty": "intermediate",
       "popularity": 205,
       "updatedAt": "2025-08-28T17:30:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": false
     },
     {
       "id": "s4",
@@ -38,7 +41,8 @@
       "difficulty": "intermediate",
       "popularity": 99,
       "updatedAt": "2025-07-02T12:00:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": false
     },
     {
       "id": "s5",
@@ -48,7 +52,8 @@
       "difficulty": null,
       "popularity": 140,
       "updatedAt": "2025-06-11T08:12:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": false
     },
     {
       "id": "s6",
@@ -58,7 +63,8 @@
       "difficulty": "intermediate",
       "popularity": 77,
       "updatedAt": "2025-09-15T14:20:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": false
     },
     {
       "id": "s7",
@@ -68,7 +74,8 @@
       "difficulty": "beginner",
       "popularity": 88,
       "updatedAt": "2025-05-30T13:45:00Z",
-      "completed": false
+      "completed": false,
+      "favourite": false
     },
     {
       "id": "s8",
@@ -78,7 +85,8 @@
       "difficulty": "advanced",
       "popularity": 160,
       "updatedAt": "2025-08-03T19:05:00Z",
-      "completed": true
+      "completed": true,
+      "favourite": false
     }
   ]
 }

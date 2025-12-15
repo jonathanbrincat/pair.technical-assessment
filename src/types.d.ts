@@ -7,4 +7,5 @@ export interface Session {
   popularity: number
   updatedAt: string
   completed: boolean
+  favourite: boolean
 }
