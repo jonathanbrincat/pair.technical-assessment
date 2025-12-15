@@ -127,7 +127,7 @@ const filterSessionsHandler = debounce((event: Event) => {
         </li>
       </ul>
 
-      <h3 class="text-lg my-4" v-show="favouriteList.length">Other Sessions</h3>
+      <h3 class="text-lg my-4" v-show="favouriteList.length && sessionsList.length">Other Sessions</h3>
       <ul
         id="session-list"
         class="flex flex-col gap-4"
